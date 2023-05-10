@@ -1,29 +1,47 @@
-{% extends 'base.html' %}
-
-{% block content %}
-  <h1 class="mb-4">Task List</h1>
-  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-    {% for task in tasks %}
-      <div class="col">
-        <div class="card {% if task.priority == 'high' %}border-danger{% elif task.priority == 'medium' %}border-warning{% else %}border-success{% endif %}">
-          <div class="card-header">
-            <h5 class="card-title">{{ task.title }}</h5>
-          </div>
-          <div class="card-body">
-            <p class="card-text">{{ task.description }}</p>
-            <p class="card-text">Due Date: {{ task.due_date }}</p>
-            <p class="card-text">Priority: {{ task.get_priority_display }}</p>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" {% if task.completed %}checked{% endif %} id="completed-{{ task.id }}">
-              <label class="form-check-label" for="completed-{{ task.id }}">Completed</label>
-            </div>
-          </div>
-          <div class="card-footer">
-            <a href="{% url 'task_edit' pk=task.pk %}" class="btn btn-primary">Edit</a>
-            <a href="{% url 'task_delete' pk=task.pk %}" class="btn btn-danger">Delete</a>
-          </div>
+{% extends 'base.html' %} {% block content %}
+<h1 class="mb-4 text-center mt-3">Task List</h1>
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+  {% for task in tasks %}
+  <div class="col">
+    <div
+      class="card {% if task.priority == 'high' %}border-danger{% elif task.priority == 'medium' %}border-warning{% else %}border-success{% endif %}"
+    >
+      <div
+        class="card-header text-white text-center {% if task.priority == 'high' %}bg-danger{% elif task.priority == 'medium' %}bg-warning{% else %}bg-success{% endif %}"
+      >
+        <h5 class="card-title">{{ task.title }}</h5>
+      </div>
+      <div class="card-body">
+        <p>{{ task.description }}</p>
+        <p><span class="text-info">Due Date:</span> {{ task.due_date }}</p>
+        <p><span class="text-info">Priority:</span> {{ task.get_priority_display }}</p>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            {%
+            if
+            task.completed
+            %}checked{%
+            endif
+            %}
+            id="completed-{{ task.id }}"
+          />
+          <label class="form-check-label" for="completed-{{ task.id }}"
+            >Completed</label
+          >
         </div>
       </div>
-    {% endfor %}
+      <div class="card-footer">
+        <a href="{% url 'task_edit' pk=task.pk %}" class="btn btn-primary"
+          >Edit</a
+        >
+        <a href="{% url 'task_delete' pk=task.pk %}" class="btn btn-danger"
+          >Delete</a
+        >
+      </div>
+    </div>
   </div>
+  {% endfor %}
+</div>
 {% endblock %}
