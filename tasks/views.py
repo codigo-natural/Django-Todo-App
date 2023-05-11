@@ -49,7 +49,7 @@ def task_edit(request, pk):
     }
     return render(request, 'tasks/task_edit.html', context)
 
-def task_completed(request, pk):
+def task_completed(request):
     task = Task.objects.filter(completed=True).order_by('due_date', 'priority')
     context = {
         'task': task
